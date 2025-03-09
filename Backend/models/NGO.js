@@ -21,7 +21,11 @@ const ngoSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
-}, { timestamps: true });
+  password: {
+    type: String,
+    required: true,
+  },
+}, { timestamps: true, minimize: false });
 
 const NGO = mongoose.models.NGO || mongoose.model("NGO", ngoSchema);
 export default NGO;

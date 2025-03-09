@@ -1,7 +1,9 @@
 import express from 'express';
 import multer from 'multer';
 import { v4 as uuidv4 } from 'uuid';
+import bcrypt from 'bcryptjs';
 import NGO from '../models/NGO.js';
+import User from '../models/User.js';
 import { bucket } from '../config/firebase.js';
 
 const router = express.Router();
@@ -24,7 +26,7 @@ router.post('/register', upload.fields([
   { name: 'aadhar', maxCount: 1 }
 ]), async (req, res) => {
   try {
-    const { ngoName, ownerName, ownerEmail } = req.body;
+    const { ngoName, ownerName, ownerEmail, password } = req.body;
     if (!req.files || !req.files.certificate || !req.files.aadhar) {
       return res.status(400).json({ error: 'Both certificate and aadhar files are required' });
     }
@@ -52,15 +54,31 @@ router.post('/register', upload.fields([
       aadharFile.mimetype || 'application/octet-stream'
     );
 
+    // Hash the password for secure storage
+    const salt = await bcrypt.genSalt(10);
+    const hashedPassword = await bcrypt.hash(password, salt);
+
+    // Create a new NGO record with the provided details and hashed password
     const newNGO = new NGO({
       ngoName,
       ownerName,
       ownerEmail,
       ngoValidationCertificateUrl: certificateUrl,
       ownerAadharUrl: aadharUrl,
+      password: hashedPassword,
     });
-
     await newNGO.save();
+
+    // Create a corresponding User record for login using NGO owner's credentials
+    const newUser = new User({
+      name: ownerName,
+      email: ownerEmail,
+      password: hashedPassword,
+      role: 'owner', // Mark this user as an owner of an NGO
+      userNGO: ngoName,
+      userNGOrole: 'owner'
+    });
+    await newUser.save();
 
     res.status(201).json({
       message: 'NGO registered successfully',

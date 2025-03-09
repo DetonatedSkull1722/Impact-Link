@@ -1,3 +1,4 @@
+// Updated User.js
 import mongoose from 'mongoose';
 
 const userSchema = new mongoose.Schema({
@@ -12,7 +13,7 @@ const userSchema = new mongoose.Schema({
   },
   role: {
     type: String,
-    enum: ['user', 'ngo'],
+    enum: ['user', 'owner'], // Only two roles: user and owner
     default: 'user',
   },
   points: {
@@ -21,17 +22,16 @@ const userSchema = new mongoose.Schema({
   },
   password: {
     type: String,
-    // This field is optional if using Firebase authentication
   },
   userNGO: {
     type: String,
-    default: "", // If the user associates with an NGO, store its identifier here
+    default: "", // If the user is associated with an NGO, store its identifier here
   },
   userNGOrole: {
     type: String,
-    default: "", // Store the NGO role if applicable; otherwise, an empty string
+    default: "", // Store the NGO role if applicable
   },
-}, { timestamps: true });
+}, { timestamps: true, minimize: false });
 
 const User = mongoose.models.User || mongoose.model("User", userSchema);
 export default User;
