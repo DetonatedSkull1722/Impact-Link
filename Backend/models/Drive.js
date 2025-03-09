@@ -6,12 +6,16 @@ const driveSchema = new mongoose.Schema({
     required: true,
   },
   description: String,
-  date: {
+  startDate: {  // Start date and time of the event
+    type: Date,
+    required: true,
+  },
+  endDate: {    // End date and time of the event
     type: Date,
     required: true,
   },
   location: String,
-  imageUrl: String, // This URL comes from Firebase Storage after the upload
+  imageUrl: String, // URL from Firebase Storage after the upload
   createdBy: {
     type: mongoose.Schema.Types.ObjectId,
     ref: 'User',
@@ -21,8 +25,7 @@ const driveSchema = new mongoose.Schema({
     type: mongoose.Schema.Types.ObjectId,
     ref: 'User',
   }],
-}, { timestamps: true });
-
+}, { timestamps: true, minimize: false });
 
 const Drive = mongoose.models.Drive || mongoose.model("Drive", driveSchema);
 export default Drive;
