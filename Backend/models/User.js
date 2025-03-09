@@ -21,10 +21,17 @@ const userSchema = new mongoose.Schema({
   },
   password: {
     type: String,
-    // This field is optional if you are using Firebase authentication
+    // This field is optional if using Firebase authentication
+  },
+  userNGO: {
+    type: String,
+    default: "", // If the user associates with an NGO, store its identifier here
+  },
+  userNGOrole: {
+    type: String,
+    default: "", // Store the NGO role if applicable; otherwise, an empty string
   },
 }, { timestamps: true });
-
 
 const User = mongoose.models.User || mongoose.model("User", userSchema);
 export default User;

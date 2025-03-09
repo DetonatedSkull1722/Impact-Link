@@ -8,30 +8,25 @@ dotenv.config();
 
 const router = express.Router();
 
-/**
- * POST /api/users/register
- * Registers a new user (or NGO) with hashed password.
- */
 router.post('/register', async (req, res) => {
   try {
-    const { name, email, password, role } = req.body;
+    const { name, email, password, role, userNGO, userNGOrole } = req.body;
 
-    // Check if user already exists
     const existingUser = await User.findOne({ email });
     if (existingUser) {
       return res.status(400).json({ error: 'User already exists' });
     }
 
-    // Hash the password
     const salt = await bcrypt.genSalt(10);
     const hashedPassword = await bcrypt.hash(password, salt);
 
-    // Create a new user document
     const newUser = new User({
       name,
       email,
       password: hashedPassword,
-      role, // 'user' or 'ngo'
+      role,
+      userNGO: userNGO || "",
+      userNGOrole: userNGOrole || ""
     });
 
     await newUser.save();
@@ -44,6 +39,8 @@ router.post('/register', async (req, res) => {
         email: newUser.email,
         role: newUser.role,
         points: newUser.points,
+        userNGO: newUser.userNGO,
+        userNGOrole: newUser.userNGOrole,
       },
     });
   } catch (error) {
