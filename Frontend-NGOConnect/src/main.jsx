@@ -1,7 +1,11 @@
 import React from 'react'
 import ReactDOM from 'react-dom/client'
 import { ChakraProvider, extendTheme } from '@chakra-ui/react'
+import { BrowserRouter, Routes, Route } from 'react-router-dom'
 import App from './App.jsx'
+import LoginScreen from './pages/LoginScreen.jsx'
+import NGORegister from './pages/NGORegister.jsx'
+import UserRegister from './pages/UserRegister.jsx'
 import './index.css'
 
 // Extend the theme to use a dark mode and customize colors
@@ -59,7 +63,14 @@ const theme = extendTheme({
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
     <ChakraProvider theme={theme}>
-      <App />
+      <BrowserRouter>
+        <Routes>
+          <Route path="/" element={<LoginScreen />} />
+          <Route path="/dashboard" element={<App />} />
+          <Route path="/ngoregister" element={<NGORegister />} />
+          <Route path="/userregister" element={<UserRegister />} />
+        </Routes>
+      </BrowserRouter>
     </ChakraProvider>
   </React.StrictMode>,
 )

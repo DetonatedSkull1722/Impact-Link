@@ -1,7 +1,7 @@
 // src/components/Dashboard.jsx
 import { Grid, GridItem, useBreakpointValue } from '@chakra-ui/react'
-import FeatureCard from './FeatureCard'
-import Banner from './Banner'
+import FeatureCard from '../components/FeatureCard'
+import Banner from '../components/Banner'
 import { FaUsers, FaChartLine, FaMoneyBillWave, FaExclamationTriangle, FaHandshake, FaHeadset } from 'react-icons/fa'
 
 const features = [
