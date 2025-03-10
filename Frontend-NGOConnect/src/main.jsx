@@ -1,13 +1,15 @@
-import React from 'react'
-import ReactDOM from 'react-dom/client'
-import { ChakraProvider, extendTheme } from '@chakra-ui/react'
-import { BrowserRouter, Routes, Route } from 'react-router-dom'
-import App from './App.jsx'
-import LoginScreen from './pages/LoginScreen.jsx'
-import NGORegister from './pages/NGORegister.jsx'
-import UserRegister from './pages/UserRegister.jsx'
-import CreateEvent from './pages/CreateEvent.jsx'
-import './index.css'
+import React from 'react';
+import ReactDOM from 'react-dom/client';
+import { ChakraProvider, extendTheme } from '@chakra-ui/react';
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import App from './App.jsx';
+import LoginScreen from './pages/LoginScreen.jsx';
+import NGORegister from './pages/NGORegister.jsx';
+import UserRegister from './pages/UserRegister.jsx';
+import CreateEvent from './pages/CreateEvent.jsx';
+import ParticipateEvents from './pages/ParticipateEvents.jsx';
+import EventDetails from './pages/EventDetails.jsx';
+import './index.css';
 import { AuthProvider } from './contexts/Context.jsx';
 
 // Extend the theme to use a dark mode and customize colors
@@ -48,19 +50,19 @@ const theme = extendTheme({
         container: {
           borderRadius: '16px',
           overflow: 'hidden',
-        }
-      }
-    }
+        },
+      },
+    },
   },
   styles: {
     global: {
       body: {
         bg: "#171923",
         color: "white",
-      }
-    }
-  }
-})
+      },
+    },
+  },
+});
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
@@ -73,9 +75,11 @@ ReactDOM.createRoot(document.getElementById('root')).render(
             <Route path="/ngoregister" element={<NGORegister />} />
             <Route path="/userregister" element={<UserRegister />} />
             <Route path="/createevent" element={<CreateEvent />} />
+            <Route path="/participate" element={<ParticipateEvents />} />
+            <Route path="/participate/:id" element={<EventDetails />} />
           </Routes>
         </BrowserRouter>
       </AuthProvider>
     </ChakraProvider>
-  </React.StrictMode>,
+  </React.StrictMode>
 );

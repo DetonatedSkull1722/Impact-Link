@@ -69,11 +69,10 @@ function Dashboard() {
         {features.map((feature, index) => (
           <GridItem
             key={index}
-            onClick={() => navigate(feature.route)}
             cursor="pointer"
             _hover={{ transform: 'scale(1.02)', transition: 'all 0.2s ease-in-out' }}
           >
-            <FeatureCard {...feature} />
+            <FeatureCard {...feature} onClick={() => navigate(feature.route)}/>
           </GridItem>
         ))}
       </Grid>

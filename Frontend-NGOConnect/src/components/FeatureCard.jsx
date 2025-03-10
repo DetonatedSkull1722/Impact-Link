@@ -1,8 +1,12 @@
+// src/components/FeatureCard.jsx
 import { Box, Flex, Heading, Text, Button, Icon } from '@chakra-ui/react'
+import { useNavigate } from 'react-router'
 
-function FeatureCard({ title, subtitle, icon, buttonText, buttonColor, ...rest }) {
+function FeatureCard({ title, subtitle, icon, buttonText, buttonColor, route, ...rest }) {
+ const navigate = useNavigate();
   return (
     <Box 
+      onClick={rest.onClick}
       borderWidth="1px" 
       borderColor="gray.700"
       borderRadius="20px" 
@@ -15,7 +19,6 @@ function FeatureCard({ title, subtitle, icon, buttonText, buttonColor, ...rest }
       flexDirection="column"
       justifyContent="space-between"
       transition="all 0.3s"
-      cursor="pointer"  // Added to indicate it's clickable
       _hover={{ 
         transform: "translateY(-5px)",
         boxShadow: "xl",
@@ -37,11 +40,15 @@ function FeatureCard({ title, subtitle, icon, buttonText, buttonColor, ...rest }
         alignSelf="flex-start"
         size="sm"
         borderRadius="12px"
+        onClick={(e) => {
+          e.stopPropagation(); // Prevents the click from bubbling to parent elements
+          onClick();
+        }}
       >
         {buttonText}
-      </Button>
+    </Button>
     </Box>
   )
 }
 
-export default FeatureCard;
+export default FeatureCard
