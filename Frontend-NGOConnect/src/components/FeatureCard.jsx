@@ -1,15 +1,23 @@
-// src/components/FeatureCard.jsx
-import { Box, Flex, Heading, Text, Button, Icon } from '@chakra-ui/react'
-import { useNavigate } from 'react-router'
+import { Box, Flex, Heading, Text, Button, Icon } from '@chakra-ui/react';
+import { useNavigate } from 'react-router-dom';
 
 function FeatureCard({ title, subtitle, icon, buttonText, buttonColor, route, ...rest }) {
- const navigate = useNavigate();
+  const navigate = useNavigate();
+  
+  const handleCardClick = () => {
+    if (route) navigate(route);
+  };
+
+  const handleButtonClick = (e) => {
+    e.stopPropagation(); // Prevent the card click event
+    if (route) navigate(route);
+  };
+
   return (
-    <Box 
-      onClick={rest.onClick}
-      borderWidth="1px" 
+    <Box
+      borderWidth="1px"
       borderColor="gray.700"
-      borderRadius="20px" 
+      borderRadius="20px"
       overflow="hidden"
       bg="bg.card"
       boxShadow="lg"
@@ -19,11 +27,13 @@ function FeatureCard({ title, subtitle, icon, buttonText, buttonColor, route, ..
       flexDirection="column"
       justifyContent="space-between"
       transition="all 0.3s"
-      _hover={{ 
-        transform: "translateY(-5px)",
+      cursor={route ? "pointer" : "default"}
+      _hover={{
+        transform: route ? "translateY(-5px)" : "none",
         boxShadow: "xl",
-        borderColor: buttonColor 
+        borderColor: buttonColor,
       }}
+      onClick={handleCardClick}
       {...rest}
     >
       <Box>
@@ -33,22 +43,20 @@ function FeatureCard({ title, subtitle, icon, buttonText, buttonColor, route, ..
         </Flex>
         {subtitle && <Text color="gray.400" fontSize="sm">{subtitle}</Text>}
       </Box>
-      <Button 
+      
+      <Button
         mt={4}
-        colorScheme={buttonColor.split('.')[1]} 
+        colorScheme={buttonColor.split('.').length > 1 ? buttonColor.split('.')[0] : buttonColor}
         rightIcon={<span>→</span>}
         alignSelf="flex-start"
         size="sm"
         borderRadius="12px"
-        onClick={(e) => {
-          e.stopPropagation(); // Prevents the click from bubbling to parent elements
-          onClick();
-        }}
+        onClick={handleButtonClick}
       >
         {buttonText}
-    </Button>
+      </Button>
     </Box>
-  )
+  );
 }
 
-export default FeatureCard
+export default FeatureCard;

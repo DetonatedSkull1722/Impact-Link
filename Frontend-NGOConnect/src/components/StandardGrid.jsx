@@ -1,17 +1,18 @@
 // src/components/StandardGrid.jsx
-import { Box, VStack, Heading } from '@chakra-ui/react'
-import Banner from './Banner'
-import FeatureCard from './FeatureCard'
-import { FaUsers, FaChartLine, FaMoneyBillWave, FaExclamationTriangle, FaHandshake, FaHeadset } from 'react-icons/fa'
+import { Box, VStack, Heading } from '@chakra-ui/react';
+import Banner from './Banner';
+import FeatureCard from './FeatureCard';
+import { FaUsers, FaChartLine, FaMoneyBillWave, FaExclamationTriangle, FaHandshake, FaHeadset } from 'react-icons/fa';
 
 // Feature data
 const features = [
   {
     title: 'Organise an initiative',
-    subtitle: '',
+    subtitle: 'Create events & initiatives',
     icon: FaUsers,
     buttonText: 'Organise',
     buttonColor: 'brand.secondary',
+    route: '/createevent',
   },
   {
     title: 'NGO Activity',
@@ -19,13 +20,15 @@ const features = [
     icon: FaChartLine,
     buttonText: 'View',
     buttonColor: 'brand.primary',
+    route: '/ngosummary',  // You'll need to create this route
   },
   {
     title: 'Grant Applications',
-    subtitle: '',
+    subtitle: 'Apply for funding opportunities',
     icon: FaMoneyBillWave,
     buttonText: 'Apply',
     buttonColor: 'brand.secondary',
+    route: '/grantapplications',  // You'll need to create this route
   },
   {
     title: 'Emergency',
@@ -33,13 +36,15 @@ const features = [
     icon: FaExclamationTriangle,
     buttonText: 'Request',
     buttonColor: 'brand.primary',
+    route: '/emergency',  // You'll need to create this route
   },
   {
-    title: 'Participate in an intiative',
-    subtitle: '',
+    title: 'Participate in an initiative',
+    subtitle: 'Join existing NGO events',
     icon: FaHandshake,
     buttonText: 'Participate',
     buttonColor: 'brand.secondary',
+    route: '/participate',
   },
   {
     title: 'Support Center',
@@ -47,8 +52,9 @@ const features = [
     icon: FaHeadset,
     buttonText: 'Contact',
     buttonColor: 'brand.primary',
+    route: '/support',  // You'll need to create this route
   },
-]
+];
 
 function StandardGrid() {
   return (
@@ -63,7 +69,7 @@ function StandardGrid() {
         ))}
       </VStack>
     </Box>
-  )
+  );
 }
 
-export default StandardGrid
+export default StandardGrid;

@@ -1,18 +1,19 @@
 // src/components/BentoGrid.jsx
-import { Box, Grid, GridItem, Heading, Text } from '@chakra-ui/react'
-import Banner from './Banner'
-import FeatureCard from './FeatureCard'
-import { FaUsers, FaChartLine, FaMoneyBillWave, FaExclamationTriangle, FaHandshake, FaHeadset } from 'react-icons/fa'
+import { Box, Grid, GridItem, Heading } from '@chakra-ui/react';
+import Banner from './Banner';
+import FeatureCard from './FeatureCard';
+import { FaUsers, FaChartLine, FaMoneyBillWave, FaExclamationTriangle, FaHandshake, FaHeadset } from 'react-icons/fa';
 
 // Feature data
 const features = [
   {
     title: 'Organise an initiative',
-    subtitle: '',
+    subtitle: 'Create events & initiatives',
     icon: FaUsers,
     buttonText: 'Organise',
     buttonColor: 'brand.secondary',
     gridArea: 'organize',
+    route: '/createevent',
   },
   {
     title: 'NGO Activity',
@@ -21,14 +22,16 @@ const features = [
     buttonText: 'View',
     buttonColor: 'brand.primary',
     gridArea: 'activity',
+    route: '/ngosummary',  // You'll need to create this route
   },
   {
     title: 'Grant Applications',
-    subtitle: '',
+    subtitle: 'Apply for funding opportunities',
     icon: FaMoneyBillWave,
     buttonText: 'Apply',
     buttonColor: 'brand.secondary',
     gridArea: 'grant',
+    route: '/grantapplications',  // You'll need to create this route
   },
   {
     title: 'Emergency',
@@ -37,14 +40,16 @@ const features = [
     buttonText: 'Request',
     buttonColor: 'brand.primary',
     gridArea: 'emergency',
+    route: '/emergency',  // You'll need to create this route
   },
   {
-    title: 'Participate in an intiative',
-    subtitle: '',
+    title: 'Participate in an initiative',
+    subtitle: 'Join existing NGO events',
     icon: FaHandshake,
     buttonText: 'Participate',
     buttonColor: 'brand.secondary',
     gridArea: 'participate',
+    route: '/participate',
   },
   {
     title: 'Support Center',
@@ -53,8 +58,9 @@ const features = [
     buttonText: 'Contact',
     buttonColor: 'brand.primary',
     gridArea: 'support',
+    route: '/support',  // You'll need to create this route
   },
-]
+];
 
 function BentoGrid() {
   return (
@@ -82,7 +88,7 @@ function BentoGrid() {
         ))}
       </Grid>
     </Box>
-  )
+  );
 }
 
-export default BentoGrid
+export default BentoGrid;
