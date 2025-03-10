@@ -29,7 +29,7 @@ router.post('/create', upload.single('image'), async (req, res) => {
   try {
     const { title, description, startDate, endDate, location, createdBy, role } = req.body;
     if (role !== 'owner') {
-      return res.status(403).json({ error: 'Only owners can create events' });
+      return res.status(403).json({ error: `${role} Only owners can create events` });
     }
     let imageUrl = "";
     if (req.file) {
@@ -46,6 +46,7 @@ router.post('/create', upload.single('image'), async (req, res) => {
       location,
       imageUrl,
       createdBy,
+      role, // Include role here so the schema requirement is satisfied
       participants: [],
     });
     res.status(201).json({

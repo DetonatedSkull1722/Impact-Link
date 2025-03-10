@@ -16,6 +16,10 @@ const driveSchema = new mongoose.Schema({
   },
   location: String,
   imageUrl: String, // URL from Firebase Storage after the upload
+  role:{
+    type: String,
+    required: true
+  },
   createdBy: {
     type: mongoose.Schema.Types.ObjectId,
     ref: 'User',

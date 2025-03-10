@@ -1,4 +1,3 @@
-// src/components/FeatureCard.jsx
 import { Box, Flex, Heading, Text, Button, Icon } from '@chakra-ui/react'
 
 function FeatureCard({ title, subtitle, icon, buttonText, buttonColor, ...rest }) {
@@ -16,6 +15,7 @@ function FeatureCard({ title, subtitle, icon, buttonText, buttonColor, ...rest }
       flexDirection="column"
       justifyContent="space-between"
       transition="all 0.3s"
+      cursor="pointer"  // Added to indicate it's clickable
       _hover={{ 
         transform: "translateY(-5px)",
         boxShadow: "xl",
@@ -44,4 +44,4 @@ function FeatureCard({ title, subtitle, icon, buttonText, buttonColor, ...rest }
   )
 }
 
-export default FeatureCard
+export default FeatureCard;

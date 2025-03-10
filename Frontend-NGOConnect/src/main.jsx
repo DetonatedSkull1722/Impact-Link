@@ -6,7 +6,9 @@ import App from './App.jsx'
 import LoginScreen from './pages/LoginScreen.jsx'
 import NGORegister from './pages/NGORegister.jsx'
 import UserRegister from './pages/UserRegister.jsx'
+import CreateEvent from './pages/CreateEvent.jsx'
 import './index.css'
+import { AuthProvider } from './contexts/Context.jsx';
 
 // Extend the theme to use a dark mode and customize colors
 const theme = extendTheme({
@@ -63,14 +65,17 @@ const theme = extendTheme({
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
     <ChakraProvider theme={theme}>
-      <BrowserRouter>
-        <Routes>
-          <Route path="/" element={<LoginScreen />} />
-          <Route path="/dashboard" element={<App />} />
-          <Route path="/ngoregister" element={<NGORegister />} />
-          <Route path="/userregister" element={<UserRegister />} />
-        </Routes>
-      </BrowserRouter>
+      <AuthProvider>
+        <BrowserRouter>
+          <Routes>
+            <Route path="/" element={<LoginScreen />} />
+            <Route path="/dashboard" element={<App />} />
+            <Route path="/ngoregister" element={<NGORegister />} />
+            <Route path="/userregister" element={<UserRegister />} />
+            <Route path="/createevent" element={<CreateEvent />} />
+          </Routes>
+        </BrowserRouter>
+      </AuthProvider>
     </ChakraProvider>
   </React.StrictMode>,
-)
+);

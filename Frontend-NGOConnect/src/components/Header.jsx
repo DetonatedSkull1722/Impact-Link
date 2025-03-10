@@ -18,7 +18,7 @@ function Header() {
       zIndex="sticky"
     >
       <Flex justifyContent="space-between" alignItems="center">
-        <Heading size="lg">Cluster NGO</Heading>
+        <Heading size="lg">NGO-CONNECT</Heading>
         {isMobile ? (
           <IconButton
             icon={<FaBars />}
