@@ -111,4 +111,20 @@ router.get('/rankings', async (req, res) => {
   }
 });
 
+//Rank based return
+router.get('/rankings', async (req, res) => {
+  try {
+    // Retrieve users sorted by points in descending order (highest score first)
+    const rankedUsers = await User.find()
+      .sort({ points: -1 })
+      .select('-password'); // Exclude password field for security
+
+    res.json(rankedUsers);
+  } catch (error) {
+    console.error('Rankings error:', error);
+    res.status(500).json({ error: 'Server error' });
+  }
+});
+
+
 export default router;

@@ -62,7 +62,7 @@ router.post('/create', upload.single('image'), async (req, res) => {
  * GET /api/drives
  * Lists all events.
  */
-router.get('/', async (req, res) => {
+router.get('/get', async (req, res) => {
   try {
     const events = await Drive.find().populate('createdBy', 'name email');
     res.json(events);
