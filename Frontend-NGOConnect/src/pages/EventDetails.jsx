@@ -55,14 +55,17 @@ function EventDetails() {
       });
       return;
     }
-
+  
     try {
       const response = await fetch(`http://localhost:5000/api/drives/${id}/participate`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ userId: userInfo.userId }),
+        body: JSON.stringify({
+          userId: userInfo.userId,
+          role: userInfo.role,  // 🔥 Fixed: Send role
+        }),
       });
-
+  
       const data = await response.json();
       if (response.ok) {
         toast({
@@ -93,6 +96,7 @@ function EventDetails() {
       });
     }
   };
+  
 
   if (!event) return <Text>Loading...</Text>;
 
