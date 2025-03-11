@@ -1,4 +1,5 @@
 import React, { useContext } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { 
   Box, 
   Heading, 
@@ -9,15 +10,16 @@ import {
   Flex,
   Badge,
   Divider,
-  Skeleton,
   Center,
-  Spinner
+  Spinner,
+  Button
 } from '@chakra-ui/react';
-import { Medal, Award, Star } from 'lucide-react';
+import { Medal, Award, Star, Users } from 'lucide-react';
 import { AuthContext } from '../contexts/Context';
 
 function UserRankings({ ...props }) {
   const { userRankings, rankingsLoading } = useContext(AuthContext);
+  const navigate = useNavigate();
   
   // Badge icon based on position
   const getBadgeIcon = (index) => {
@@ -25,7 +27,7 @@ function UserRankings({ ...props }) {
       case 0: return <Medal size={16} color="#FFD700" />;
       case 1: return <Medal size={16} color="#C0C0C0" />;
       case 2: return <Medal size={16} color="#CD7F32" />;
-      default: return <Star size={16} color="#6B7280" />;
+      default: return <Medal size={16} color="#6B7280" />;
     }
   };
   
@@ -33,7 +35,8 @@ function UserRankings({ ...props }) {
   const getBadgeType = (index) => {
     if (index === 0) return 'Gold';
     if (index === 1) return 'Silver';
-    if (index >= 2) return 'Bronze';
+    if (index === 2) return 'Bronze';
+    if (index >= 3) return 'Iron';
     return 'Member';
   };
   
@@ -47,6 +50,11 @@ function UserRankings({ ...props }) {
     }
   };
 
+  // Handler for navigating to all rankings page
+  const handleViewAllRankings = () => {
+    navigate('/rankings');
+  };
+
   return (
     <Box 
       borderRadius="24px" 
@@ -55,13 +63,24 @@ function UserRankings({ ...props }) {
       bg="bg.card" 
       borderWidth="1px" 
       borderColor="gray.700"
-      height="380px"
+      height="420px"
       position="relative"
       {...props}
     >
-      <Box bg="rgba(0,0,0,0.3)" p={4}>
-        <Heading size="md" color="white" mb={1}>Top Contributors</Heading>
-        <Text fontSize="sm" color="gray.300">Users making the biggest impact</Text>
+      <Box bg="rgba(0,0,0,0.3)" p={4} display="flex" justifyContent="space-between" alignItems="center">
+        <Box>
+          <Heading size="md" color="white" mb={1}>Top Contributors</Heading>
+          <Text fontSize="sm" color="gray.300">Users making the biggest impact</Text>
+        </Box>
+        <Button 
+          size="sm" 
+          colorScheme="blue" 
+          leftIcon={<Users size={16} />}
+          onClick={handleViewAllRankings}
+          variant="outline"
+        >
+          View All
+        </Button>
       </Box>
       
       <Divider borderColor="gray.700" />
@@ -76,7 +95,7 @@ function UserRankings({ ...props }) {
         </Center>
       ) : (
         <VStack spacing={0} divider={<Divider borderColor="gray.700" />} align="stretch" p={0} maxH="280px" overflowY="auto">
-          {userRankings.map((user, index) => {
+          {userRankings.slice(0, 4).map((user, index) => {  // Restrict to 4 entries
             const badgeType = getBadgeType(index);
             
             return (

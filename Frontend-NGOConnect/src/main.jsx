@@ -11,6 +11,7 @@ import ParticipateEvents from './pages/ParticipateEvents.jsx';
 import EventDetails from './pages/EventDetails.jsx';
 import './index.css';
 import { AuthProvider } from './contexts/Context.jsx';
+import RankingsPage from './pages/RankingsPage.jsx';
 
 // Extend the theme to use a dark mode and customize colors
 const theme = extendTheme({
@@ -77,6 +78,7 @@ ReactDOM.createRoot(document.getElementById('root')).render(
             <Route path="/createevent" element={<CreateEvent />} />
             <Route path="/participate" element={<ParticipateEvents />} />
             <Route path="/participate/:id" element={<EventDetails />} />
+            <Route path="/rankings" element={<RankingsPage />} />
           </Routes>
         </BrowserRouter>
       </AuthProvider>
