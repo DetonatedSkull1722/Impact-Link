@@ -133,7 +133,7 @@ function EventCarousel() {
       </Box>
       
       {/* Add some custom CSS for better dots */}
-      <style jsx global>{`
+      <style>{`
         .custom-dots {
           bottom: 10px;
         }
