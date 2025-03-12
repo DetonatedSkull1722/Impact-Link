@@ -11,6 +11,30 @@ body {
   min-height: 100vh;
   background-color: #171923;
   color: white;
+  position: relative;
+}
+
+body::before {
+  content: "";
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-image: linear-gradient(135deg, #0F172A 0%, #1E1B4B 50%, #0F172A 100%);
+  z-index: -10;
+}
+
+body::after {
+  content: "";
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 800 800' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.03'/%3E%3C/svg%3E");
+  z-index: -5;
+  opacity: 0.3;
 }
 
 /* Slick carousel custom styles */
@@ -43,3 +67,4 @@ body {
 .slick-prev:before, .slick-next:before {
   font-size: 24px;
 }
+

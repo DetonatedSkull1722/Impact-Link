@@ -26,7 +26,7 @@ function App() {
 
   // Otherwise, render the main home screen
   return (
-    <Box minH="100vh" bg="bg.primary">
+    <Box minH="100vh">
       <Header maxW="container.xl"/>
       <Container maxW="container.xl" py={6}>
         {/* Responsive grid layout for event carousel and user rankings */}

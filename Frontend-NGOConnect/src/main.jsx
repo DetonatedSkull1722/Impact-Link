@@ -14,7 +14,7 @@ import { AuthProvider } from './contexts/Context.jsx';
 import RankingsPage from './pages/RankingsPage.jsx';
 import NGOSummary from './pages/NGOSummary.jsx';
 
-// Extend the theme to use a dark mode and customize colors
+
 const theme = extendTheme({
   config: {
     initialColorMode: 'dark',
@@ -22,14 +22,14 @@ const theme = extendTheme({
   },
   colors: {
     brand: {
-      primary: "#3182CE", // blue shade
-      secondary: "#E53E3E", // red shade
-      accent: "#805AD5", // purple shade
+      primary: "#0EA5E9", // bright blue
+      secondary: "#F43F5E", // vivid pink/red
+      accent: "#8B5CF6", // rich purple
     },
     bg: {
-      primary: "#171923", // dark background
-      secondary: "#1A202C", // slightly lighter
-      card: "#2D3748", // for cards/elements
+      primary: "#0F172A", // very dark blue-gray
+      secondary: "#1E293B", // slightly lighter blue-gray
+      card: "#334155", // mid blue-gray for cards
     },
   },
   fonts: {
@@ -59,7 +59,8 @@ const theme = extendTheme({
   styles: {
     global: {
       body: {
-        bg: "#171923",
+        background: "linear-gradient(135deg, #0F172A 0%, #1E1B4B 50%, #0F172A 100%)", // Subtle gradient
+        backgroundAttachment: "fixed", // Keeps the gradient fixed during scroll
         color: "white",
       },
     },
