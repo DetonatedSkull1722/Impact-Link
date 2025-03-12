@@ -5,6 +5,6 @@ import { authenticate, authorize } from '../MiddleWare/auth.js';
 
 const router = express.Router();
 
-router.get('/signed-url', getSignedUrl);
+router.get('/signed-url', authenticate, getSignedUrl);
 
 export default router;

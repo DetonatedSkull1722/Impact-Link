@@ -113,10 +113,16 @@ function CreateEvent() {
     }
 
     try {
+      const token = sessionStorage.getItem('token');
       const res = await fetch('http://localhost:5000/api/drives/create', {
         method: 'POST',
+        headers: {
+          'Authorization': `Bearer ${token}`,
+          // Do not set 'Content-Type' header when sending FormData
+        },
         body: formData,
       });
+
       const data = await res.json();
       if (res.ok) {
         toast({
