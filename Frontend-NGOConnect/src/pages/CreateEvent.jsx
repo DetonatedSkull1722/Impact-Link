@@ -113,7 +113,7 @@ function CreateEvent() {
     }
 
     try {
-      const token = sessionStorage.getItem('token');
+      const token = localStorage.getItem('token');
       const res = await fetch('http://localhost:5000/api/drives/create', {
         method: 'POST',
         headers: {

@@ -11,7 +11,7 @@ function ParticipateEvents() {
   useEffect(() => {
     const fetchEvents = async () => {
       try {
-        const token = sessionStorage.getItem('token');
+        const token = localStorage.getItem('token');
         const response = await fetch('http://localhost:5000/api/drives/get', {
           headers: {
             'Authorization': `Bearer ${token}`

@@ -10,8 +10,8 @@ export const AuthProvider = ({ children }) => {
   const [rankingsLoading, setRankingsLoading] = useState(true); // Loading state for rankings
 
   useEffect(() => {
-    // Decode user token from sessionStorage
-    const token = sessionStorage.getItem('token');
+    // Decode user token from localStorage
+    const token = localStorage.getItem('token');
     if (token) {
       try {
         const decoded = jwtDecode(token);

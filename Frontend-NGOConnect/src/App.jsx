@@ -9,13 +9,13 @@ import Footer from './components/Footer';
 import LoginScreen from './pages/LoginScreen';
 
 function App() {
-  const [token, setToken] = useState(sessionStorage.getItem('token'));
+  const [token, setToken] = useState(localStorage.getItem('token'));
   const isMobile = useBreakpointValue({ base: true, md: false });
   const isTablet = useBreakpointValue({ base: true, lg: false });
 
-  // Update token state if sessionStorage changes
+  // Update token state if localStorage changes
   useEffect(() => {
-    const storedToken = sessionStorage.getItem('token');
+    const storedToken = localStorage.getItem('token');
     setToken(storedToken);
   }, []);
 
