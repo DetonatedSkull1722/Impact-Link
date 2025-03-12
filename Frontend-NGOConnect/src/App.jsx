@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Box, Container, Grid, GridItem, useBreakpointValue } from '@chakra-ui/react';
 import Header from './components/Header';
 import EventCarousel from './components/EventCarousel';
-import UserRankings from './components/UserRankings'; // New component we'll create
+import UserRankings from './components/UserRankings';
 import BentoGrid from './components/BentoGrid';
 import StandardGrid from './components/StandardGrid';
 import Footer from './components/Footer';
@@ -26,7 +26,33 @@ function App() {
 
   // Otherwise, render the main home screen
   return (
-    <Box minH="100vh">
+    <Box
+      minH="100vh"
+      position="relative"
+      _before={{
+        content: '""',
+        position: 'absolute',
+        top: 0,
+        left: 0,
+        right: 0,
+        bottom: 0,
+        backgroundImage: "url('/bg-image.png')",
+        backgroundSize: "cover",
+        backgroundPosition: "center",
+        backgroundAttachment: "fixed",
+        zIndex: -2,
+      }}
+      _after={{
+        content: '""',
+        position: 'absolute',
+        top: 0,
+        left: 0,
+        right: 0,
+        bottom: 0,
+        background: "rgba(15, 23, 42, 0.97)", // Dark overlay matching your theme's bg.primary with opacity
+        zIndex: -1,
+      }}
+    >
       <Header maxW="container.xl"/>
       <Container maxW="container.xl" py={6}>
         {/* Responsive grid layout for event carousel and user rankings */}

@@ -84,17 +84,25 @@ function EventCarousel() {
                     width="100%"
                     height="380px"
                     objectFit="cover"
-                    opacity="0.85"
+                    opacity="1"
                     transition="all 0.5s ease"
+                  />
+                  {/* Gradient overlay instead of black box */}
+                  <Box
+                    position="absolute"
+                    bottom="0"
+                    left="0"
+                    right="0"
+                    height="180px"  // Taller gradient for better blend
+                    background="linear-gradient(to top, rgba(0,0,0,0.85) 0%, rgba(0,0,0,0.5) 60%, rgba(0,0,0,0) 100%)"
+                    pointerEvents="none"
                   />
                   <MotionBox
                     position="absolute"
                     bottom="0"
                     width="100%"
-                    bg="rgba(0,0,0,0.75)"
                     color="white"
                     p={4}
-                    backdropFilter="blur(8px)"
                     initial={{ y: 20, opacity: 0 }}
                     animate={{ 
                       y: 0, 
@@ -152,6 +160,10 @@ function EventCarousel() {
         }
         .slick-slide {
           transition: transform 0.5s ease;
+        }
+        /* Add smooth transitions for gradient effect */
+        .slick-slide.slick-active {
+          z-index: 1;
         }
       `}</style>
     </Box>

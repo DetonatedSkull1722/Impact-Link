@@ -75,7 +75,7 @@ function LoginScreen() {
                 autoPlay
                 loop
                 muted
-                src="/bgvideo.mp4"  // Replace with actual path to your video
+                src="/bgvideo2.mp4"  // Replace with actual path to your video
             />
             
             {/* Semi-transparent overlay to ensure form readability */}

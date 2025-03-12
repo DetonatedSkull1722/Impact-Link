@@ -9,12 +9,14 @@ NGO Connect is a backend API built with Node.js, Express, MongoDB (via Mongoose)
 ## Table of Contents
 
 1. [Setup and Installation](#setup-and-installation)
-2. [API Endpoints](#api-endpoints)
+2. [Project Structure](#project-structure)
+3. [API Endpoints](#api-endpoints)
    - [User Endpoints](#user-endpoints)
    - [NGO Endpoints](#ngo-endpoints)
    - [Drive (Event) Endpoints](#drive-endpoints)
    - [Secure File Endpoint](#secure-file-endpoint)
-3. [Error Handling](#error-handling)
+4. [Authentication](#authentication)
+5. [Error Handling](#error-handling)
 
 ## Setup and Installation
 
@@ -52,6 +54,38 @@ NGO Connect is a backend API built with Node.js, Express, MongoDB (via Mongoose)
    npm start
    ```
 
+## Project Structure
+
+The project follows an MVC-like structure:
+
+```
+ngo-connect/
+├── config/                 # Database and Firebase configurations
+│   ├── db.js               # MongoDB connection
+│   ├── firebase.js         # Firebase initialization
+│   └── firebaseHelper.js   # Firebase utility functions
+├── controllers/            # Business logic
+│   ├── DriveController.js  # Event management logic
+│   ├── NGOController.js    # NGO registration logic
+│   ├── SecureFileController.js # File access logic
+│   └── UserController.js   # User management logic
+├── middleware/             # Express middleware
+│   └── auth.js             # Authentication middleware
+├── models/                 # Mongoose models
+│   ├── Drive.js            # Event model
+│   ├── NGO.js              # NGO model
+│   └── User.js             # User model
+├── routes/                 # Express routes
+│   ├── driveRoutes.js      # Event routes
+│   ├── ngoRoutes.js        # NGO routes
+│   ├── secureFileRoutes.js # Secure file routes
+│   └── userRoutes.js       # User routes
+├── .env                    # Environment variables (not in repo)
+├── package.json            # Project dependencies
+├── README.md               # Project documentation
+└── server.js               # Application entry point
+```
+
 ## API Endpoints
 
 ### User Endpoints
@@ -69,19 +103,6 @@ NGO Connect is a backend API built with Node.js, Express, MongoDB (via Mongoose)
     "userNGO": "ExampleNGO",        // Optional: identifier of the associated NGO
     "userNGOrole": "owner"          // Optional: role within the NGO (if applicable)
   }
-  ```
-- **Example curl command:**
-  ```bash
-  curl -X POST http://localhost:5000/api/users/register \
-    -H "Content-Type: application/json" \
-    -d '{
-      "name": "John Doe",
-      "email": "john@example.com",
-      "password": "secret123",
-      "role": "user",
-      "userNGO": "ExampleNGO",
-      "userNGOrole": "owner"
-    }'
   ```
 - **Response Example:**
   ```json
@@ -109,15 +130,6 @@ NGO Connect is a backend API built with Node.js, Express, MongoDB (via Mongoose)
     "password": "secret123"
   }
   ```
-- **Example curl command:**
-  ```bash
-  curl -X POST http://localhost:5000/api/users/login \
-    -H "Content-Type: application/json" \
-    -d '{
-      "email": "john@example.com",
-      "password": "secret123"
-    }'
-  ```
 - **Response Example:**
   ```json
   {
@@ -136,10 +148,6 @@ NGO Connect is a backend API built with Node.js, Express, MongoDB (via Mongoose)
 #### User Rankings
 - **Endpoint:** GET `/api/users/rankings`
 - **Description:** Retrieves a list of users sorted by their points in descending order (highest score first).
-- **Example curl command:**
-  ```bash
-  curl http://localhost:5000/api/users/rankings
-  ```
 - **Response Example:**
   ```json
   [
@@ -150,9 +158,7 @@ NGO Connect is a backend API built with Node.js, Express, MongoDB (via Mongoose)
       "role": "owner",
       "points": 10,
       "userNGO": "ExampleNGO",
-      "userNGOrole": "owner",
-      "createdAt": "2025-03-09T22:15:27.051Z",
-      "updatedAt": "2025-03-09T22:15:27.051Z"
+      "userNGOrole": "owner"
     }
     // ... more users
   ]
@@ -172,16 +178,6 @@ NGO Connect is a backend API built with Node.js, Express, MongoDB (via Mongoose)
 - **Files:**
   - `certificate`: File upload for the NGO validation certificate
   - `aadhar`: File upload for the owner's Aadhar document
-- **Example curl command:**
-  ```bash
-  curl -X POST http://localhost:5000/api/ngo/register \
-    -F "ngoName=ExampleNGO" \
-    -F "ownerName=John Doe" \
-    -F "ownerEmail=johndoe@example.com" \
-    -F "password=secret123" \
-    -F "certificate=@/path/to/your_certificate.pdf" \
-    -F "aadhar=@/path/to/your_aadhar.pdf"
-  ```
 - **Response Example:**
   ```json
   {
@@ -192,10 +188,7 @@ NGO Connect is a backend API built with Node.js, Express, MongoDB (via Mongoose)
       "ownerName": "John Doe",
       "ownerEmail": "johndoe@example.com",
       "ngoValidationCertificateUrl": "https://storage.googleapis.com/your_bucket/NGO_Information/ExampleNGO/ExampleNGO_John Doe_certificate_xxx",
-      "ownerAadharUrl": "https://storage.googleapis.com/your_bucket/NGO_Information/ExampleNGO/ExampleNGO_John Doe_aadhar_xxx",
-      "password": "hashed_password",
-      "createdAt": "...",
-      "updatedAt": "..."
+      "ownerAadharUrl": "https://storage.googleapis.com/your_bucket/NGO_Information/ExampleNGO/ExampleNGO_John Doe_aadhar_xxx"
     }
   }
   ```
@@ -216,19 +209,7 @@ NGO Connect is a backend API built with Node.js, Express, MongoDB (via Mongoose)
   - `createdBy`: User ID of the event creator (must be a valid owner ID)
   - `role`: Must be "owner"
 - **File:**
-  - `image`: File upload for the event image
-- **Example curl command:**
-  ```bash
-  curl -X POST http://localhost:5000/api/drives/create \
-    -F "title=Sample Event" \
-    -F "description=This is a sample event for testing." \
-    -F "startDate=2025-03-15T10:00:00.000Z" \
-    -F "endDate=2025-03-15T12:00:00.000Z" \
-    -F "location=Test Location" \
-    -F "createdBy=67ce1b11da4c6829756804f3" \
-    -F "role=owner" \
-    -F "image=@/path/to/event-image.jpg"
-  ```
+  - `image`: File upload for the event image (optional)
 - **Response Example:**
   ```json
   {
@@ -250,10 +231,6 @@ NGO Connect is a backend API built with Node.js, Express, MongoDB (via Mongoose)
 #### List Events
 - **Endpoint:** GET `/api/drives/get`
 - **Description:** Retrieves a list of all events along with the creator's basic details.
-- **Example curl command:**
-  ```bash
-  curl http://localhost:5000/api/drives/get
-  ```
 - **Response Example:**
   ```json
   [
@@ -286,12 +263,6 @@ NGO Connect is a backend API built with Node.js, Express, MongoDB (via Mongoose)
     "userId": "67ce1b11da4c6829756804f3"
   }
   ```
-- **Example curl command:**
-  ```bash
-  curl -X POST "http://localhost:5000/api/drives/67ce23f809eac4917ebe074e/participate" \
-    -H "Content-Type: application/json" \
-    -d '{"userId": "67ce1b11da4c6829756804f3"}'
-  ```
 - **Response Example:**
   ```json
   {
@@ -318,17 +289,6 @@ NGO Connect is a backend API built with Node.js, Express, MongoDB (via Mongoose)
     "endDate": "2025-03-15T13:00:00.000Z"
   }
   ```
-- **Example curl command:**
-  ```bash
-  curl -X PUT "http://localhost:5000/api/drives/67ce23f809eac4917ebe074e" \
-    -H "Content-Type: application/json" \
-    -d '{
-      "description": "Updated event description", 
-      "location": "New Location", 
-      "startDate": "2025-03-15T11:00:00.000Z", 
-      "endDate": "2025-03-15T13:00:00.000Z"
-    }'
-  ```
 - **Response Example:**
   ```json
   {
@@ -352,10 +312,6 @@ NGO Connect is a backend API built with Node.js, Express, MongoDB (via Mongoose)
 - **Description:** Generates a time-limited signed URL for accessing a private file in Firebase Storage. This URL is valid for 1 hour.
 - **Query Parameter:**
   - `filePath`: The exact path of the file in the bucket (URL-encoded if necessary)
-- **Example curl command:**
-  ```bash
-  curl "http://localhost:5000/api/secure/signed-url?filePath=NGO_Information/ExampleNGO/ExampleNGO_John%20Doe_aadhar_xxx"
-  ```
 - **Response Example:**
   ```json
   {
@@ -363,36 +319,26 @@ NGO Connect is a backend API built with Node.js, Express, MongoDB (via Mongoose)
   }
   ```
 
+## Authentication
+
+The system uses JWT (JSON Web Tokens) for authentication:
+
+1. **Token Generation:** When a user logs in successfully, the server generates a JWT token that contains the user's ID and role.
+2. **Token Usage:** For protected routes, include the token in the Authorization header:
+   ```
+   Authorization: Bearer your_jwt_token
+   ```
+3. **Authentication Middleware:** The `authenticate` middleware verifies the JWT token and attaches the user object to the request.
+4. **Role-Based Authorization:** The `authorize` middleware checks if the authenticated user has the required role to access a resource.
+
 ## Error Handling
 
 The API implements standard HTTP status codes for error responses:
 
 - **400 Bad Request:** Returned when required fields are missing or the input data is invalid.
-- **401 Unauthorized:** Returned when authentication fails (e.g., invalid login credentials).
+- **401 Unauthorized:** Returned when authentication fails (e.g., invalid login credentials or token).
 - **403 Forbidden:** Returned when a user without sufficient privileges attempts a restricted action (e.g., non-owners creating events).
 - **404 Not Found:** Returned when a requested resource (user, event) is not found.
 - **500 Internal Server Error:** Returned when an unexpected server error occurs.
 
-## License
-
-[Include license information here]
-
-
-I've updated the README.md with comprehensive details for each endpoint, including:
-
-1. Detailed descriptions for every endpoint that explain exactly what they do
-2. Complete request formats showing all required fields and their purpose
-3. Curl example commands for every endpoint, formatted properly for easy copy-paste usage
-4. Response examples showing what to expect from each API call
-5. Additional notes and explanations where needed (like for NGO registration)
-
-Each endpoint now follows a consistent format:
-- Endpoint URL and method
-- Detailed description
-- Required parameters with examples
-- Curl command example
-- Expected response format
-
-This comprehensive documentation will make it much easier for developers to integrate with your API without having to refer back to the original documentation.
-
-Is there anything specific you'd like me to add or modify further?
+Each error response includes a JSON object with an `error` field describing the issue.
