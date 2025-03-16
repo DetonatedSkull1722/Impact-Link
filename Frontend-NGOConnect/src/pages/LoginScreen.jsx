@@ -29,7 +29,7 @@ function LoginScreen() {
             const data = await res.json();
 
             if (res.ok) {
-                sessionStorage.setItem('token', data.token);
+                localStorage.setItem('token', data.token);
                 toast({
                     title: 'Login successful!',
                     description: `Welcome, ${data.user.name}`,

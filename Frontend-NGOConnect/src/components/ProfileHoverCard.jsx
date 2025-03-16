@@ -9,7 +9,7 @@ function ProfileHoverCard() {
 
   // Logout function
   const handleLogout = () => {
-    sessionStorage.removeItem('token'); // Remove session token
+    localStorage.removeItem('token'); // Remove session token
     setUserInfo(null); // Clear user context
     navigate('/'); // Redirect to login page
   };
