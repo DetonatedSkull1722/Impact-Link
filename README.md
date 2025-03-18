@@ -1,4 +1,4 @@
-# NGO Connect
+# Impact Link
 
 A centralized platform designed to manage events and initiatives within India's NGO ecosystem.
 
