@@ -1,10 +1,10 @@
-# NGO Connect
+# Impact Link
 
 A centralized platform designed to manage events and initiatives within India's NGO ecosystem.
 
 ## Overview
 
-NGO Connect is a backend API built with Node.js, Express, MongoDB (via Mongoose), and Firebase Storage for file uploads. The platform enables NGO registration, event management, user participation, and ranking systems.
+Impact Link is a backend API built with Node.js, Express, MongoDB (via Mongoose), and Firebase Storage for file uploads. The platform enables NGO registration, event management, user participation, and ranking systems.
 
 ## Table of Contents
 
@@ -22,7 +22,7 @@ NGO Connect is a backend API built with Node.js, Express, MongoDB (via Mongoose)
 
 1. **Clone the repository:**
    ```bash
-   git clone https://github.com/DetonatedSkull1722/NGO-Connect.git
+   git clone https://github.com/DetonatedSkull1722/ImpactLink.git
    ```
 
 2. **Install dependencies:**
@@ -59,7 +59,7 @@ NGO Connect is a backend API built with Node.js, Express, MongoDB (via Mongoose)
 The project follows an MVC-like structure:
 
 ```
-ngo-connect/
+ImpactLink/
 ├── config/                 # Database and Firebase configurations
 │   ├── db.js               # MongoDB connection
 │   ├── firebase.js         # Firebase initialization
