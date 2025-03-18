@@ -2,6 +2,11 @@
 
 A centralized platform designed to manage events and initiatives within India's NGO ecosystem.
 
+## How to run
+
+Clone the repository, use firebase credentials to setup the storage and also make sure that your mongo db is setup too.
+run the backend first and after the "database connected" message is shown, npm run dev the frontend
+
 ## Overview
 
 Impact Link is a backend API built with Node.js, Express, MongoDB (via Mongoose), and Firebase Storage for file uploads. The platform enables NGO registration, event management, user participation, and ranking systems.
